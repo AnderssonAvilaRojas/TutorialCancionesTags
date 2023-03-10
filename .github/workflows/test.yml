@@ -21,8 +21,8 @@ jobs:
       uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        source-branch: ${{ env.RAMA_DESTINO }}
-        target-branch: ${{ github.ref }}
+        source-branch: ${{ github.ref }}
+        target-branch: ${{ env.RAMA_DESTINO }}
   job2:
     name: Pruebas
     runs-on: ubuntu-latest
