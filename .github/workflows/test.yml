@@ -38,7 +38,7 @@ jobs:
         ref: 'release${{ steps.random.outputs.value }}'
   job2:
     needs: job1
-    name: Pruebas en rama  'release${{ job1.steps.random.outputs.value }}'
+    name: Pruebas en rama  release
     runs-on: ubuntu-latest
     steps:
     - name: Checkout de repositorio
