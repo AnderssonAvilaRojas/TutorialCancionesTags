@@ -24,13 +24,16 @@ jobs:
         source-branch: ${{ github.ref }}
         target-branch: ${{ env.RAMA_DESTINO }}
   job2:
-    permissions: write-all
-    name: Pruebas
-    runs-on: ubuntu-latest
+    permission: write-all
+    name: Cambio-De-Branch
     steps:
     - name: Crear rama
       run: |
-        git checkout -b ${{ env.RAMA_DESTINO }}
+        git checkout -b release
+  job2:
+    name: Pruebas
+    runs-on: ubuntu-latest
+    steps:
     - name: Checkout de repositorio
       uses: actions/checkout@v2
     - name: Configuración de entorno de python
