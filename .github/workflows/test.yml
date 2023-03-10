@@ -16,42 +16,24 @@ jobs:
     name: crea_rama
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2.3.4
-    - name: Generate random number
-      id: random
-      run: echo "::set-output name=value::$(echo $RANDOM)"
-      shell: bash
-    - name: Example how to use the output
-      run: echo "${{ steps.random.outputs.value }}"
-      shell: bash
-    - name: create branch
-      id: create-branch
-      uses: peterjgrainger/action-create-branch@v2.0.1
-      env:
-      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Check out this repo
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        branch: post-${{ steps.random.outputs.value }}
-    - name: download file
-      run: wget ${{ github.event.issue.body }} -O source/_posts/
-    - name: commit and push new file
-      run: |
-        git config user.name "GitHub Actions Bot"
-        git config user.email "a.avilar2@uniandes.edu.co"
-        git add .
-        git commit -m "New post"
-        git push -u origin post-${{ steps.random.outputs.value }}
-      shell: bash
-    - name: create pull request towards the main branch
-      uses: peter-evans/create-pull-request@v3.10.1
-      with:
-        token: ${{ inputs.secret }}
-        commit-message: Auto Pull Request
-        title: New post pr
-        body: Auto-created Pull Request
-        branch: post-${{ steps.random.outputs.value }}
-        base: master
-                  
+        python-version: '3.9'
+    - name: Install necessary Python packages
+      run: pip install pandas jupyter lxml playwright beautifulsoup4 requests
+    - name: Run the scraping script
+      run: python scraper.py
+    - name: Commit and push if content changed
+      run: |-
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "Latest data: ${timestamp}" || exit 0
+        git push
 
   job2:
     permissions: write-all
