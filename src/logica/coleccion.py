@@ -155,6 +155,7 @@ class Coleccion():
                      session.query(Cancion).filter(Cancion.titulo.ilike('%{0}%'.format(cancion_titulo))).all()]
         return canciones
 
+
     def buscar_canciones_por_interprete(self, interprete_nombre):
         if interprete_nombre == "":
             canciones = session.query(Cancion).all()
