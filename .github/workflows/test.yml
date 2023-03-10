@@ -28,13 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Branch name1
-      run: echo running on branch ${GITHUB_REF##*/}
+      run: echo running on branch ${{GITHUB_REF##*/}}
     - name: Checkout 
       uses: actions/checkout@v3
       with:
         ref: release
-    - name: Branch name1
-      run: echo running on branch ${GITHUB_REF##*/}
+    - name: Branch name2ß
+      run: echo running on branch ${{GITHUB_REF##*/}}
     - name: Checkout de repositorio
       uses: actions/checkout@v2
     - name: Configuración de entorno de python
