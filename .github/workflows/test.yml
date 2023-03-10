@@ -23,6 +23,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         source-branch: ${{ github.ref }}
         target-branch: ${{ env.RAMA_DESTINO }}
+    - name: hace cambio de rama
+      id: cambiar-rama
       run: |
         git checkout -b release
 
