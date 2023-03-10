@@ -24,7 +24,7 @@ jobs:
         source-branch: ${{ github.ref }}
         target-branch: ${{ env.RAMA_DESTINO }}
   job2:
-    permission: write-all
+    permissions: write-all
     name: Cambio-De-Branch
     steps:
     - name: Crear rama
