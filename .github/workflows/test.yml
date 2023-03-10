@@ -37,7 +37,8 @@ jobs:
       with:
         ref: 'release${{ steps.random.outputs.value }}'
   job2:
-    name: Pruebas en rama release
+    needs: job1
+    name: Pruebas en rama  release
     runs-on: ubuntu-latest
     steps:
     - name: Checkout de repositorio
@@ -55,6 +56,7 @@ jobs:
       run: python -m unittest discover -s tests
 
   job3:
+    needs: job2
     permissions: write-all
     name: Integrar-release-main
     if: ${{ contains(github.event.head_commit.message, 'MERGE_RELEASE') }}
