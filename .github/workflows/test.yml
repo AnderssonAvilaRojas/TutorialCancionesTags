@@ -30,7 +30,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        branch: 'release-notes'
+        branch: ${{ steps.random.outputs.value }}
         sha: '${{ github.event.pull_request.head.sha }}'
 
   job2:
