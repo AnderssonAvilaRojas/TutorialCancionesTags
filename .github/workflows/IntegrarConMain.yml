@@ -11,6 +11,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 env:
   RAMA_DESTINO: 'main'
+  RAMA_CREADA: random.outputs.value
 jobs:
 
   job1:
@@ -24,18 +25,18 @@ jobs:
       id: random
       run: echo "::set-output name=value::$(echo $RANDOM)"
     - name: Example how to use the output
-      run: echo "${{ steps.random.outputs.value }}"
+      run: echo "${{ env.RAMA_CREADA }}"
     - name: create branch
       uses: peterjgrainger/action-create-branch@v2.2.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        branch: 'release${{ steps.random.outputs.value }}'
+        branch: 'release${{ env.RAMA_CREADA }}'
         sha: '${{ github.event.pull_request.head.sha }}'
     - name: hace cambio a rama release
       uses: actions/checkout@v3
       with:
-        ref: 'release${{ steps.random.outputs.value }}'
+        ref: 'release${{ env.RAMA_CREADA }}'
   job2:
     needs: job1
     name: Pruebas en rama  release
