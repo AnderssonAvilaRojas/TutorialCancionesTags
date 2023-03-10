@@ -26,6 +26,7 @@ jobs:
       run: echo "${{ steps.random.outputs.value }}"
       shell: bash
     - name: create branch
+      id: create-branch
       uses: peterjgrainger/action-create-branch@v2.0.1
       with:
         branch: post-${{ steps.random.outputs.value }}
