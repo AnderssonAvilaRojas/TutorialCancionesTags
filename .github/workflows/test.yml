@@ -50,6 +50,8 @@ jobs:
     steps:
     - name: se crea documento 
       uses: actions/checkout@v3
+    - name: ejecuta
+      id: ejecuta
       run: |
          date > generated.txt
          git config user.name github-actions
