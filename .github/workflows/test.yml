@@ -27,8 +27,6 @@ jobs:
     name: Pruebas
     runs-on: ubuntu-latest
     steps:
-    - name: Branch name1
-      run: echo running on branch ${{GITHUB_REF##*/}}
     - name: Checkout 
       uses: actions/checkout@v3
       with:
