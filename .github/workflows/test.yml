@@ -26,7 +26,7 @@ jobs:
     - name: hace cambio de rama
       uses: actions/checkout@v3
       with:
-        ref: release
+        ref: ${{ env.RAMA_DESTINO }}
   job2:
     name: Pruebas
     runs-on: ubuntu-latest
