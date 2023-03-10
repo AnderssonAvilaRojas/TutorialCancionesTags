@@ -30,7 +30,7 @@ jobs:
     - name: Crear rama
       run: |
         git checkout -b release
-  job2:
+  job3:
     name: Pruebas
     runs-on: ubuntu-latest
     steps:
