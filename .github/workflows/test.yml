@@ -27,6 +27,8 @@ jobs:
     name: Pruebas
     runs-on: ubuntu-latest
     steps:
+    - name: current branch
+      run: echo "::set-output name=respuesta::${steps.current_branch}"
     - name: Checkout 
       uses: actions/checkout@v3
       with:
