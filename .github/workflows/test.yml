@@ -10,6 +10,9 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 env:
   RAMA_DESTINO: 'release'
+run: |
+  git checkout -b rama
+  git push -f -u origin rama
 jobs:
   job1:
     permissions: write-all
@@ -44,18 +47,4 @@ jobs:
     - name: Correr pruebas
       id: correr-pruebas
       run: python -m unittest discover -s tests
-  job3:
-    name: Crea Documento
-    runs-on: ubuntu-latest
-    steps:
-    - name: se crea documento 
-      uses: actions/checkout@v3
-    - name: ejecuta
-      id: ejecuta
-      run: |
-         date > generated.txt
-         git config user.name github-actions
-         git config user.email github-actions@github.com
-         git add .
-         git commit -m "generated"
-         git push
+
