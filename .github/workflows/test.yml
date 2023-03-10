@@ -26,9 +26,12 @@ jobs:
     - name: Example how to use the output
       run: echo "${{ steps.random.outputs.value }}"
     - name: create branch
-       run: |
-      git checkout -b ${{ steps.random.outputs.value }}
-      git push -f -u origin ${{ steps.random.outputs.value }}
+      uses: peterjgrainger/action-create-branch@v2.2.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        branch: 'release-notes'
+        sha: '${{ github.event.pull_request.head.sha }}'
 
   job2:
     permissions: write-all
