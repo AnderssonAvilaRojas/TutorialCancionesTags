@@ -27,13 +27,13 @@ jobs:
     name: Pruebas
     runs-on: ubuntu-latest
     steps:
-    - name: Get branch name
-      id: branch-name
-      uses: tj-actions/branch-names@v6
     - name: Checkout 
       uses: actions/checkout@v3
       with:
         ref: release
+    - name: Get branch name
+      id: branch-name
+      uses: tj-actions/branch-names@v6
     - name: current branch
       run: |
         echo "Running on default: ${{ steps.branch-name.outputs.current_branch }}"
