@@ -24,9 +24,9 @@ jobs:
         source-branch: ${{ github.ref }}
         target-branch: ${{ env.RAMA_DESTINO }}
     - name: hace cambio de rama
-      id: cambiar-rama
-      run: |
-        git checkout -b release
+      uses: actions/checkout@v3
+      with:
+        ref: release
 
   job2:
     name: Pruebas
