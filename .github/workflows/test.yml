@@ -24,6 +24,7 @@ jobs:
         source-branch: ${{ github.ref }}
         target-branch: ${{ env.RAMA_DESTINO }}
   job2:
+    permissions: write-all
     name: Pruebas
     runs-on: ubuntu-latest
     steps:
