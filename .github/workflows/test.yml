@@ -37,7 +37,7 @@ jobs:
       with:
         ref: 'release${{ steps.random.outputs.value }}'
   job2:
-    name: Pruebas en rama  'release${{ Crear-Rama-Release.steps.random.outputs.value }}'
+    name: Pruebas en rama  'release${{ job1.steps.random.outputs.value }}'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout de repositorio
