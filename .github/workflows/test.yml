@@ -12,7 +12,8 @@ env:
   RAMA_DESTINO: 'release1'
 jobs:
   job1:
-    name: do-nothing
+    permissions: write-all
+    name: crea_rama
     steps:
     - name: Checkout
       uses: actions/checkout@v2.3.4
