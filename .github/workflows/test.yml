@@ -10,12 +10,12 @@ on:
     - cron: '*/5 * * * *'
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 env:
-  RAMA_DESTINO: 'release'
+  RAMA_DESTINO: 'main'
 jobs:
 
   job1:
     permissions: write-all
-    name: Crear-Branch
+    name: Crear-Rama-Release
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -32,25 +32,12 @@ jobs:
       with:
         branch: 'release${{ steps.random.outputs.value }}'
         sha: '${{ github.event.pull_request.head.sha }}'
-
-  job2:
-    permissions: write-all
-    name: Integrar-Develop-release
-    if: ${{ contains(github.event.head_commit.message, 'MERGE_RELEASE') }}
-    runs-on: ubuntu-latest
-    steps:
-    - name: hace merge de develop a la release
-      uses: tukasz/direct-merge-action@master
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        source-branch: ${{ github.ref }}
-        target-branch: ${{ env.RAMA_DESTINO }}
-    - name: hace cambio de rama
+    - name: hace cambio a rama release
       uses: actions/checkout@v3
       with:
-        ref: ${{ env.RAMA_DESTINO }}
-  job3:
-    name: Pruebas
+        ref: "${{ steps.random.outputs.value }}"
+  job2:
+    name: Pruebas en rama release
     runs-on: ubuntu-latest
     steps:
     - name: Checkout de repositorio
@@ -66,4 +53,19 @@ jobs:
     - name: Correr pruebas
       id: correr-pruebas
       run: python -m unittest discover -s tests
+
+
+
+  job2:
+    permissions: write-all
+    name: Integrar-release-main
+    if: ${{ contains(github.event.head_commit.message, 'MERGE_RELEASE') }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: hace merge de develop a la release
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: ${{ github.ref }}
+        target-branch: ${{ env.RAMA_DESTINO }}
 
