@@ -26,6 +26,7 @@ jobs:
   job2:
     permissions: write-all
     name: Cambio-De-Branch
+    runs-on: ubuntu-latest
     steps:
     - name: Crear rama
       run: |
