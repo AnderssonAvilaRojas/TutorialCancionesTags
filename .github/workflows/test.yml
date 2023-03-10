@@ -6,11 +6,38 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
-
+  schedule:
+    - cron: '*/5 * * * *'
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+env:
+  RAMA_DESTINO: 'main'
 jobs:
+
   job1:
-    name: Pruebas
+    permissions: write-all
+    name: Crear-Rama-Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.3.4
+    - name: Generate random number
+      id: random
+      run: echo "::set-output name=value::$(echo $RANDOM)"
+    - name: Example how to use the output
+      run: echo "${{ steps.random.outputs.value }}"
+    - name: create branch
+      uses: peterjgrainger/action-create-branch@v2.2.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        branch: 'release${{ steps.random.outputs.value }}'
+        sha: '${{ github.event.pull_request.head.sha }}'
+    - name: hace cambio a rama release
+      uses: actions/checkout@v3
+      with:
+        ref: "${{ steps.random.outputs.value }}"
+  job2:
+    name: Pruebas en rama release
     runs-on: ubuntu-latest
     steps:
     - name: Checkout de repositorio
@@ -26,3 +53,17 @@ jobs:
     - name: Correr pruebas
       id: correr-pruebas
       run: python -m unittest discover -s tests
+
+  job3:
+    permissions: write-all
+    name: Integrar-release-main
+    if: ${{ contains(github.event.head_commit.message, 'MERGE_RELEASE') }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: hace merge de develop a la release
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: ${{ github.ref }}
+        target-branch: ${{ env.RAMA_DESTINO }}
+
