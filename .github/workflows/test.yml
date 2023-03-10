@@ -23,15 +23,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         source-branch: ${{ github.ref }}
         target-branch: ${{ env.RAMA_DESTINO }}
-  job2:
-    permissions: write-all
-    name: Cambio-De-Branch
-    runs-on: ubuntu-latest
-    steps:
-    - name: Crear rama
       run: |
         git checkout -b release
-  job3:
+
+  job2:
     name: Pruebas
     runs-on: ubuntu-latest
     steps:
