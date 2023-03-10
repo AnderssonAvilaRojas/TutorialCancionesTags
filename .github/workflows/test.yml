@@ -24,19 +24,9 @@ jobs:
         source-branch: ${{ github.ref }}
         target-branch: ${{ env.RAMA_DESTINO }}
   job2:
-    name: Pruebas
+       name: Pruebas
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout 
-      uses: actions/checkout@v3
-      with:
-        ref: release
-    - name: Get branch name
-      id: branch-name
-      uses: tj-actions/branch-names@v6
-    - name: current branch
-      run: |
-        echo "Running on default: ${{ steps.branch-name.outputs.current_branch }}"
     - name: Checkout de repositorio
       uses: actions/checkout@v2
     - name: Configuración de entorno de python
@@ -49,4 +39,9 @@ jobs:
         pip install -r requirements.txt
     - name: Correr pruebas
       id: correr-pruebas
-      run: python -m unittest discover -s tests
+      run: python -m unittest -v tests/test_persona.py
+   - name: Cálculo de cubrimiento
+      id: cubrimiento
+      run: |
+          coverage run -m unittest tests/test_persona.py
+          coverage report -m
