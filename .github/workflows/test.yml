@@ -30,13 +30,13 @@ jobs:
     - name: Get branch name
       id: branch-name
       uses: tj-actions/branch-names@v6
-    - name: current branch
-      run: |
-        echo "Running on default: ${{ steps.branch-name.outputs.current_branch }}"
     - name: Checkout 
       uses: actions/checkout@v3
       with:
         ref: release
+    - name: current branch
+      run: |
+        echo "Running on default: ${{ steps.branch-name.outputs.current_branch }}"
     - name: Checkout de repositorio
       uses: actions/checkout@v2
     - name: Configuración de entorno de python
