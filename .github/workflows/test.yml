@@ -27,6 +27,9 @@ jobs:
     name: Pruebas
     runs-on: ubuntu-latest
     steps:
+    - name: Crear rama
+      run: |
+        git checkout -b release
     - name: Checkout de repositorio
       uses: actions/checkout@v2
     - name: Configuración de entorno de python
