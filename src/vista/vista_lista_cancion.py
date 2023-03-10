@@ -5,7 +5,7 @@ from PyQt5 import QtCore
 
 class Ventana_Lista_Canciones(QWidget):
     '''
-    Clase de la ventana con la lista de las canciones
+    Clase1 de la ventana con la lista de las canciones
     '''
 
     def __init__(self, app):
