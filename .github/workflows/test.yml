@@ -26,28 +26,9 @@ jobs:
     - name: Example how to use the output
       run: echo "${{ steps.random.outputs.value }}"
     - name: create branch
-      uses: peterjgrainger/action-create-branch@v2.0.1
-      with:
-        # The branch to create
-        branch: post-${{ steps.random.outputs.value }}
-    - name: download file
-      run: wget ${{ github.event.issue.body }} -O source/_posts/
-    - name: commit and push new file
-      run: |
-        git config user.name "GitHub Actions Bot"
-        git config user.email "a.avila2@uniandes.edu.co"
-        git add .
-        git commit -m "New post"
-        git push -u origin post-${{ steps.random.outputs.value }}
-    - name: create pull request towards the main branch
-      uses: peter-evans/create-pull-request@v3.10.1
-      with:
-        token: ${{ secrets.GH_TOKEN }}
-        commit-message: Auto Pull Request
-        title: New post pr
-        body: Auto-created Pull Request
-        branch: post-${{ steps.random.outputs.value }} # The branch where you commit
-        base: main # Don't forget to specify the right base branch here
+       run: |
+      git checkout -b ${{ steps.random.outputs.value }}
+      git push -f -u origin ${{ steps.random.outputs.value }}
 
   job2:
     permissions: write-all
