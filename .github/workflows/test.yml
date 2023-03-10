@@ -3,13 +3,27 @@ name: CI
 # Controls when the action will run. 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ develop ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+env:
+  RAMA_DESTINO: 'release'
 jobs:
   job1:
+    permissions: write-all
+    name: Integrar-Develop-release
+    if: ${{ contains(github.event.head_commit.message, 'MERGE_RELEASE') }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: hace merge de develop a la release
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: ${{ env.RAMA_DESTINO }}
+        target-branch: ${{ github.ref }}
+  job2:
     name: Pruebas
     runs-on: ubuntu-latest
     steps:
