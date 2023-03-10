@@ -9,7 +9,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 env:
-  RAMA_DESTINO: 'release'
+  RAMA_DESTINO: 'release1'
 jobs:
   job1:
     permissions: write-all
