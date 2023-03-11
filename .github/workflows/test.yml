@@ -37,7 +37,7 @@ jobs:
 
 
   job3:
-    needs: Crear-Rama-Release
+    needs: job1
     permissions: write-all
     name: Integrar-release-main
     if: ${{ contains(github.event.head_commit.message, 'MERGE_RELEASE') }}
