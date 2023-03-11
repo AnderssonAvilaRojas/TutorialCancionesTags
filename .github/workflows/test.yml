@@ -23,11 +23,6 @@ jobs:
     - name: Generate random number
       id: random
       run: echo "::set-output name=value::$(echo $RANDOM)"
-    - name: Imprimir
-      id: imprimir
-      env:
-        MI_VARIABLE: 'release${{ steps.random.outputs.value }}'
-      run: echo "::set-output name=respuesta::${MI_VARIABLE}"
     - name: create branch
       uses: peterjgrainger/action-create-branch@v2.2.0
       env:
@@ -59,7 +54,7 @@ jobs:
       run: python -m unittest discover -s tests
 
   job3:
-    needs: job2
+    needs: [job1,job2]
     permissions: write-all
     name: Integrar-release-main
     if: ${{ contains(github.event.head_commit.message, 'MERGE_RELEASE') }}
@@ -69,7 +64,7 @@ jobs:
       uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        source-branch: ${{ env.MI_VARIABLE }}
+        source-branch: ${{ neeeds.Crear-Rama-Release.output.steps.random.outputs.value }}
         target-branch: ${{ env.RAMA_DESTINO }}
         
 
