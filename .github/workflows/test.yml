@@ -69,7 +69,7 @@ jobs:
       uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        source-branch: ${{ env.RAMA_CREADA }}
+        source-branch: ${{ env.MI_VARIABLE }}
         target-branch: ${{ env.RAMA_DESTINO }}
         
 
