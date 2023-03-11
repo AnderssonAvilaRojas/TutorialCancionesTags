@@ -6,12 +6,11 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
-  #schedule:
-   # - cron: '*/5 * * * *'
+#  schedule:
+#    - cron: '*/5 * * * *'
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 env:
   RAMA_DESTINO: 'main'
-  RAMA_CREADA: random.outputs.value
 jobs:
 
   job1:
@@ -25,18 +24,19 @@ jobs:
       id: random
       run: echo "::set-output name=value::$(echo $RANDOM)"
     - name: Example how to use the output
-      run: echo "${{ env.RAMA_CREADA }}"
+      run: echo "{environment_variable_name}={release${{ steps.random.outputs.value }}}" >> $GITHUB_ENV
+      #run: echo "${{ steps.random.outputs.value }}"
     - name: create branch
       uses: peterjgrainger/action-create-branch@v2.2.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        branch: 'release${{ env.RAMA_CREADA }}'
+        branch: 'release${{ steps.random.outputs.value }}'
         sha: '${{ github.event.pull_request.head.sha }}'
     - name: hace cambio a rama release
       uses: actions/checkout@v3
       with:
-        ref: 'release${{ env.RAMA_CREADA }}'
+        ref: 'release${{ steps.random.outputs.value }}'
   job2:
     needs: job1
     name: Pruebas en rama  release
@@ -67,6 +67,6 @@ jobs:
       uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        source-branch: ${{ github.ref }}
+        source-branch: ${{ env.environment_variable_name}}
         target-branch: ${{ env.RAMA_DESTINO }}
 
