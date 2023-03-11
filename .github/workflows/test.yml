@@ -54,7 +54,7 @@ jobs:
     - name: Correr pruebas
       id: correr-pruebas
       run: python -m unittest discover -s tests
-        ref: 'release${{ steps.random.outputs.value }}'
+        
 
   job3:
     needs: [job1,job2]
